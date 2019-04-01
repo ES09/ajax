@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script>
+		function goAjax() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/ajax');
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					console.log(xhr.response);
+				}
+			}
+			xhr.send();
+		}
+	</script>
+	<form method="get" action="/ajax">
+	<button>전송</button>
+	</form>
+	<button onclick="goAjax()">GoAJAX</button>
+</body>
+</html>
