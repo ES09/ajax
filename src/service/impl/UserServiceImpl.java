@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
 		return udao.loginByIdPwd(login);
 	}
 
+	@Override
+	public Map<String, String> login(String uiId, String uiPwd) {
+		return udao.selectUserByUiId(uiId,uiPwd);
+	}
+	
 }
