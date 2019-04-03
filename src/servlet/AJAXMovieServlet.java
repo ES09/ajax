@@ -2,9 +2,9 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,13 +52,13 @@ public class AJAXMovieServlet extends HttpServlet {
     				return;
     			}
     			Map<String,String> movie = Command.getSingleMap(request);
-    			String msg = "영화등록이 실패하였습니다.";
-    			String url = "/movie/list";
+    			Map<String,String> rMap = new HashMap<>();
+    			rMap.put("msg", "등록에 실패하였습니다.");
+    			rMap.put("url", "/views/movie/ajax_list");
     			if(ms.insertMovie(movie)==1) {
-        			msg = "영화등록이 성공하였습니다.";
-        			url = "/movie/list";
+    				rMap.put("msg","등록에 성공하였습니다.");
     			}
-    			Command.goResultPage(request, response, msg, url);
+    			Command.printJSON(response, rMap);  
 
     			} else if("delete".equals(cmd)) {
     				HttpSession hs = request.getSession();
@@ -67,14 +67,13 @@ public class AJAXMovieServlet extends HttpServlet {
         				return;
         			}
         			int miNum = Integer.parseInt(request.getParameter("mi_num"));
-        			String msg = "삭제에 실패하였습니다.";
-    				String url = "/movie/" + miNum;
+        			Map<String,String> rMap = new HashMap<>();
+        			rMap.put("msg", "삭제에 실패하였습니다.");
+        			rMap.put("url", "/views/movie/ajax_list");
         			if(ms.deleteMovie(miNum)==1) {
-        				msg = "삭제에 성공하였습니다.";
-        				url = "/movie/list";
+        				rMap.put("msg","삭제에 성공하였습니다.");
         			}
-        			Command.goResultPage(request, response, msg, url);
-        			
+        			Command.printJSON(response, rMap);        			
     			}
     	
     	}
