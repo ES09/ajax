@@ -20,7 +20,7 @@ public class UploadFile {
 	private static final String TARGET_PATH = "D:\\study\\workspace2\\ajax\\WebContent\\WEB-INF\\addr";
 	private static final int MEMORY_SIZE = 10 * 1024 * 1024;
 	private static final int TOTAL_SIZE = 100 * 1024 * 1024;
-	private static final int FILE_SIZE = 30 * 1024 * 1024;
+	private static final int FILE_SIZE = 100 * 1024 * 1024;
 	private static final File TMP_FOLDER = new File(TMP_PATH);
 	private static final DiskFileItemFactory DFI_FACTORY = new DiskFileItemFactory();
 
