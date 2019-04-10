@@ -23,6 +23,9 @@ public class AddrServlet1 extends HttpServlet {
 		if("list".equals(cmd)) {
 			as.selectAddrList(request);
 			Command.goPage(request, response, "/views/addr1/list");
+		} else if("view".equals(cmd)) {
+			as.selectAddr(request);
+			Command.goPage(request, response, "/views/addr1/view");
 		}
 		
 	}

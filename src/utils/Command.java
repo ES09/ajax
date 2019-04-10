@@ -1,6 +1,9 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -63,5 +66,17 @@ public class Command {
 		      RequestDispatcher rd = request.getRequestDispatcher(url);
 		      rd.forward(request, response);
 		   }
+	
+	public static Map<String,String> fromJSON(HttpServletRequest request) throws IOException {
+		InputStream is = request.getInputStream();
+		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(isr);
+		StringBuffer sb = new StringBuffer();
+		String line = null;
+		while((line=br.readLine())!=null) {
+			sb.append(line);
+		}
+		return JSON.fromJson(sb.toString(), Map.class);
+	}
 
 }

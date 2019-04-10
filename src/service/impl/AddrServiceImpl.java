@@ -1,5 +1,7 @@
 package service.impl;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +22,10 @@ public class AddrServiceImpl implements AddrService {
 		int page = 1;
 		int pageCount = 10;
 		int blockCount = 10;
-		if(paramMap.get("page")!=null) {
+		if(paramMap.get("page")!=null && !"".equals(paramMap.get("page"))) {
 			page = Integer.parseInt(paramMap.get("page"));
 		}
-		if(paramMap.get("pageCount")!=null) {
+		if(paramMap.get("pageCount")!=null && !"".equals(paramMap.get("pageCount"))) {
 			pageCount = Integer.parseInt(paramMap.get("pageCount"));
 		}
 		if(paramMap.get("blockCount")!=null) {
@@ -56,7 +58,7 @@ public class AddrServiceImpl implements AddrService {
 			lBlock = totalPageCnt;
 		}
 		request.setAttribute("fBlock", fBlock);
-		request.setAttribute("lBLock", lBlock);
+		request.setAttribute("lBlock", lBlock);
 		request.setAttribute("totalPageCnt", totalPageCnt);
 		return addrList;
 	}
@@ -65,6 +67,48 @@ public class AddrServiceImpl implements AddrService {
 	public int selectTotalAddrCnt() {
 		// return adao.selectTotalAddrCnt(Map<String,String> addr);
 		return 0;
+	}
+
+	@Override
+	public void selectAddr(HttpServletRequest request) {
+		Map<String,String> paramMap = Command.getSingleMap(request);
+		int page = 1;
+		int pageCount = 10;
+		if(paramMap.get("page")!=null) {
+			page = Integer.parseInt(paramMap.get("page"));
+		}
+		if(paramMap.get("pageCount")!=null) {
+			pageCount = Integer.parseInt(paramMap.get("pageCount"));
+		}
+		request.setAttribute("page", page);
+		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("addr", adao.selectAddr(paramMap));
+	}
+
+	@Override
+	public Map<String,String> updateAddr(HttpServletRequest request) throws IOException {
+		Map<String,String> addr = Command.fromJSON(request);
+		Map<String,String> rMap = new HashMap<>();
+		rMap.put("update", "false");
+		rMap.put("msg", "수정이 실패하였습니다.");
+		if(adao.updateAddr(addr)==1) {
+			rMap.put("update", "true");
+			rMap.put("msg", "수정이 성공하였습니다.");
+		}
+		return rMap;
+	}
+
+	@Override
+	public Map<String, String> deleteAddr(HttpServletRequest request) throws IOException {
+		Map<String,String> addr = Command.fromJSON(request);
+		Map<String,String> rMap = new HashMap<>();
+		rMap.put("update", "false");
+		rMap.put("msg", "삭제가 실패하였습니다.");
+		if(adao.deleteAddr(addr)==1) {
+			rMap.put("update", "true");
+			rMap.put("msg", "삭제를 성공하였습니다.");
+		}
+		return rMap;	
 	}
 
 }

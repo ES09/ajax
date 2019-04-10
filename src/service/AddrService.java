@@ -1,5 +1,6 @@
 package service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,4 +10,9 @@ public interface AddrService {
 
 	public List<Map<String,String>> selectAddrList(HttpServletRequest request);
 	public int selectTotalAddrCnt();
+	public void selectAddr(HttpServletRequest request);
+	
+	public Map<String,String> updateAddr(HttpServletRequest request) throws IOException;
+	public Map<String,String> deleteAddr(HttpServletRequest request)throws IOException;
+
 }
